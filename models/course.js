@@ -1,4 +1,5 @@
 const mongoose = require ("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 
 const courseSchema = new mongoose.Schema({
@@ -18,6 +19,11 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});
+    user: {
+        type: ObjectId,
+        ref: "user",
+        required: true,
+    },
+},{timestamps:true,versionKey:false});
 const Course = mongoose.model("Course",courseSchema );
 module.exports = Course;

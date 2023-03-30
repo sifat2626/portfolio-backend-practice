@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 const aboutSchema = new mongoose.Schema({
     lottieURL: {
         type: String,
@@ -16,6 +17,11 @@ const aboutSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
-});
+    user: {
+        type: ObjectId,
+        ref: "user",
+        required: true,
+    },
+},{timestamps:true,versionKey:false});
 const About = mongoose.model("About", aboutSchema);
 module.exports = About;

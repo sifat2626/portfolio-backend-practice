@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 const introSchema = new mongoose.Schema({
     welcomeText: {
         type: String,
@@ -20,6 +21,11 @@ const introSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});
+    user: {
+        type: ObjectId,
+        ref: "user",
+        required: true,
+    },
+},{timestamps:true,versionKey:false});
 const Intro = mongoose.model("Intro", introSchema);
 module.exports = Intro;

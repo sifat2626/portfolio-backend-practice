@@ -1,5 +1,5 @@
 const mongoose = require ("mongoose");
-
+const { ObjectId } = mongoose.Schema;
 
 const projectSchema = new mongoose.Schema({
     title: {
@@ -22,7 +22,12 @@ const projectSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
-});
+    user: {
+        type: ObjectId,
+        ref: "user",
+        required: true,
+    },
+},{timestamps:true,versionKey:false});
 
 const Project = mongoose.model("Project",projectSchema );
 module.exports = Project;

@@ -1,5 +1,5 @@
 const mongoose = require ("mongoose");
-
+const { ObjectId } = mongoose.Schema;
 
 const experienceSchema = new mongoose.Schema({
     title: {
@@ -18,6 +18,11 @@ const experienceSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});
+    user: {
+        type: ObjectId,
+        ref: "user",
+        required: true,
+    },
+},{timestamps:true,versionKey:false});
 const Experience = mongoose.model("Experience",experienceSchema );
 module.exports = Experience;

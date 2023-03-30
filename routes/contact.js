@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const {
-    createOrUpdate
+    create,
+    update
 } = require('../controllers/contact')
 
-router.post('/contact',createOrUpdate)
+router.post('/contact/create',create);
+router.patch('/contact/update',update);
 module.exports = router;

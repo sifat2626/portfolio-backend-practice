@@ -1,5 +1,22 @@
 const Project = require("../models/project");
-const User = require("../models/userModel");
+const User = require("../models/user");
+exports.createUser = async (req,res) =>{
+    try{
+        const {username} = req.body;
+        const {password} = req.body;
+        if(!username || !password){
+            return res.error("Invalid input");
+        }
+        const existingUser = await User.findOne({username});
+        if(existingUser){
+            return res.json("username already exists");
+        }
+        const user = await new User({username,password}).save();
+        res.json(user)
+    }catch(error){
+        res.json(error)
+    }
+}
 exports.userInfo = async (req,res)=>{
     try{
         const {username} = req.body;

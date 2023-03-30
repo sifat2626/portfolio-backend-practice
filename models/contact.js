@@ -1,4 +1,5 @@
 const mongoose = require ("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const contactSchema = new mongoose.Schema({
     name: {
@@ -25,6 +26,11 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});
+    user: {
+        type: ObjectId,
+        ref: "user",
+        required: true,
+    },
+},{timestamps:true,versionKey:false});
 const Contact = mongoose.model("Contact",contactSchema );
 module.exports = Contact;
