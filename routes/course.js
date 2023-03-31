@@ -6,6 +6,6 @@ const {
 } = require('../controllers/course');
 
 router.post("/course",create);
-router.patch("/course",update);
-router.delete("/course",remove);
+router.patch("/course/:_id",update);
+router.delete("/course/:_id",remove);
 module.exports = router;

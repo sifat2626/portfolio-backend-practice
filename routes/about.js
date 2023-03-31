@@ -3,7 +3,9 @@ const {
     create,
     update
 } = require('../controllers/about')
+const {remove} = require("../controllers/experience");
 
-router.post('/create',create);
-router.patch('/update/:_id',update);
+router.post("/about",create);
+router.patch("/about/:_id",update);
+router.delete("/about/:_id",remove);
 module.exports = router;

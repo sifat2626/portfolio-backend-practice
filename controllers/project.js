@@ -1,42 +1,31 @@
 const Project = require("../models/project");
-exports.create = async (req,res) =>{
+
+exports.create = async(req,res)=>{
     try {
-        const project = new Project(req.body);
-        await project.save();
-        res.status(200).send({
-            data: project,
-            success: true,
-            message: "Project added successfully",
-        });
+        const project = await new Project(req.body).save();
+        res.json(project)
     } catch (error) {
         res.status(500).send(error);
     }
 }
 exports.update = async (req,res) =>{
-    try {
-        const project = await Project.findOneAndUpdate(
-            { _id: req.body._id },
-            req.body,
-            { new: true }
-        );
-        res.status(200).send({
-            data: project,
-            success: true,
-            message: "Project updated successfully",
+    try{
+        const project = await Project.findByIdAndUpdate(req.params._id,{
+            ...req.body
         });
-    } catch (error) {
-        res.status(500).send(error);
+        console.log(project)
+        await project.save();
+
+        res.json(project)
+    }catch (error){
+        res.json(error)
     }
 }
 exports.remove = async (req,res) =>{
-    try {
-        const project = await Project.findOneAndDelete({ _id: req.body._id });
-        res.status(200).send({
-            data: project,
-            success: true,
-            message: "Project deleted successfully",
-        });
-    } catch (error) {
-        res.status(500).send(error);
+    try{
+        const project = await Project.findByIdAndDelete(req.params._id)
+        res.json(project)
+    }catch (error){
+        res.json(error)
     }
 }

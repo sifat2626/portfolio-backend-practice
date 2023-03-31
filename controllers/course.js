@@ -1,43 +1,31 @@
 const Course = require("../models/course");
 
-exports.create = async (req,res) =>{
+exports.create = async(req,res)=>{
     try {
-        const course = new Course(req.body);
+        const course = await new Course(req.body).save();
+        res.json(course)
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+exports.update = async (req,res) =>{
+    try{
+        const course = await Course.findByIdAndUpdate(req.params._id,{
+            ...req.body
+        });
+        console.log(course)
         await course.save();
-        res.status(200).send({
-            data: course,
-            success: true,
-            message: "Course added successfully",
-        });
-    } catch (error) {
-        res.status(500).send(error);
+
+        res.json(course)
+    }catch (error){
+        res.json(error)
     }
 }
-exports.update = async(req,res) =>{
-    try {
-        const course = await Course.findOneAndUpdate(
-            { _id: req.body._id },
-            req.body,
-            { new: true }
-        );
-        res.status(200).send({
-            data: course,
-            success: true,
-            message: "Course updated successfully",
-        });
-    } catch (error) {
-        res.status(500).send(error);
-    }
-}
-exports.remove = async (req,res) => {
-    try {
-        const course = await Course.findOneAndDelete({ _id: req.body._id });
-        res.status(200).send({
-            data: course,
-            success: true,
-            message: "Course deleted successfully",
-        });
-    } catch (error) {
-        res.status(500).send(error);
+exports.remove = async (req,res) =>{
+    try{
+        const course = await Course.findByIdAndDelete(req.params._id)
+        res.json(course)
+    }catch (error){
+        res.json(error)
     }
 }

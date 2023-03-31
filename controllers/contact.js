@@ -1,6 +1,5 @@
 const Contact = require("../models/contact");
-
-
+const Experience = require("../models/experience");
 
 exports.create = async(req,res)=>{
     try {
@@ -12,12 +11,20 @@ exports.create = async(req,res)=>{
 }
 exports.update = async (req,res) =>{
     try{
-        const {name,gender,email,mobile,age,address,user} = req.body;
-        const contact = await About.findByIdAndUpdate(req.params._id,{
+        const contact = await Contact.findByIdAndUpdate(req.params._id,{
             ...req.body
         });
+        console.log(contact)
         await contact.save();
 
+        res.json(contact)
+    }catch (error){
+        res.json(error)
+    }
+}
+exports.remove = async (req,res) =>{
+    try{
+        const contact = await Experience.findByIdAndDelete(req.params._id)
         res.json(contact)
     }catch (error){
         res.json(error)

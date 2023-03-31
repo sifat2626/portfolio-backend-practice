@@ -4,7 +4,7 @@ const {
     update,
     remove
 } = require('../controllers/project');
-router.post('/create',create);
-router.patch('/update',update);
-router.delete('/delete',remove);
+router.post("/project",create);
+router.patch("/project/:_id",update);
+router.delete("/project/:_id",remove);
 module.exports = router;
