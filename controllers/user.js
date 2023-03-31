@@ -1,6 +1,11 @@
+const About = require("../models/about");
+const Contact = require("../models/contact");
+const Course = require("../models/course");
+const Experience = require("../models/experience");
+const Intro = require("../models/intro");
 const Project = require("../models/project");
 const User = require("../models/user");
-exports.createUser = async (req,res) =>{
+exports.create = async (req,res) =>{
     try{
         const {username} = req.body;
         const {password} = req.body;
@@ -20,10 +25,22 @@ exports.createUser = async (req,res) =>{
 exports.userInfo = async (req,res)=>{
     try{
         const {username} = req.body;
-        const user = await User.findOne({username});
+        const user = await User.findOne({username}).select("-password");
+        const about = await About.findOne({user:user._id});
+        const contact = await Contact.findOne({user:user._id});
+        const course = await Course.findOne({user:user._id});
+        const experience = await Experience.findOne({user:user._id});
+        const intro = await Intro.findOne({user:user._id});
+        const project = await Project.findOne({user:user._id});
         if (user) {
             res.status(200).send({
-                data: user,
+                user,
+                about,
+                contact,
+                course,
+                experience,
+                intro,
+                project
             });
         }else{
             res.json({message:"no user found"})
@@ -37,20 +54,11 @@ exports.login = async (req, res) => {
         const user = await User.findOne({
             username: req.body.username,
             password: req.body.password,
-        });
-        user.password = "";
-        if (user) {
-            res.status(200).send({
-                data: user,
-                success: true,
-                message: "Login successfully",
-            });
-        } else {
-            res.status(200).send({
-                data: user,
-                success: false,
-                message: "Invalid username or password",
-            });
+        }).select("-password");
+        if(!user){
+            return res.status(401).send("User Unauthorized")
+        }else{
+            res.status(200).send(user)
         }
     } catch (error) {
         res.status(500).send(error);
