@@ -1,5 +1,4 @@
 const About = require("../models/about");
-const User = require("../models/user");
 
 exports.create = async(req,res)=>{
     try {
@@ -11,11 +10,9 @@ exports.create = async(req,res)=>{
 }
 exports.update = async (req,res) =>{
     try{
-        const {lottieURL,description1,description2,skills,user} = req.body;
         const about = await About.findByIdAndUpdate(req.params._id,{
                 ...req.body
-        });
-        await about.save();
+        }).save();
         res.json(about)
     }catch (error){
         res.json(error)
