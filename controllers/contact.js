@@ -8,6 +8,18 @@ exports.create = async(req,res)=>{
         res.status(500).send(error);
     }
 }
+exports.read = async(req,res)=>{
+    try{
+        const contact = await Contact.findById(req.params._id);
+        if(!contact){
+            return res.json({message:"Couldn't find any about info"})
+        }else{
+            res.send(contact);
+        }
+    }catch(error){
+        res.send(error)
+    }
+}
 exports.update = async (req,res) =>{
     try{
         const contact = await Contact.findByIdAndUpdate(req.params._id,{

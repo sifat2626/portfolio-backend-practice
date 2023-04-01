@@ -21,6 +21,7 @@ const aboutSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "user",
         required: true,
+        unique:true
     },
 },{timestamps:true,versionKey:false});
 const About = mongoose.model("About", aboutSchema);

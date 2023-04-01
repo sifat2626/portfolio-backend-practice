@@ -22,6 +22,28 @@ exports.create = async (req,res) =>{
         res.json(error)
     }
 }
+exports.update = async (req,res) =>{
+    try{
+        const {username,password} = req.body;
+        const existingUser = await User.findOne({username});
+        if(existingUser){
+            return res.json("username already exists");
+        }
+        console.log(username,password)
+        const user = await User.findByIdAndUpdate(req.params._id,{
+            username,
+            password
+        })
+        await user.save();
+        if(!user){
+            res.error("No user found")
+        }else{
+            res.send(user)
+        }
+    }catch(error){
+        res.error(error);
+    }
+}
 exports.userInfo = async (req,res)=>{
     try{
         const {username} = req.body;
@@ -62,5 +84,17 @@ exports.login = async (req, res) => {
         }
     } catch (error) {
         res.status(500).send(error);
+    }
+}
+exports.remove = async(req,res) =>{
+    try{
+        const user = await User.findByIdAndDelete(req.params._id);
+        if(!user){
+            return res.error("No user found")
+        }else{
+            res.send(user)
+        }
+    }catch(error){
+        res.error(error)
     }
 }

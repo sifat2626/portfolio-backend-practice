@@ -1,10 +1,13 @@
 const router = require("express").Router();
 const {
     create,
-    update
+    read,
+    update,
+    remove
 } = require('../controllers/about')
-const {remove} = require("../controllers/experience");
 
+
+router.get("/about/:_id",read)
 router.post("/about",create);
 router.patch("/about/:_id",update);
 router.delete("/about/:_id",remove);

@@ -8,6 +8,18 @@ exports.create = async(req,res)=>{
         res.status(500).send(error);
     }
 }
+exports.read = async(req,res)=>{
+    try{
+        const experience = await Experience.findById(req.params._id);
+        if(!experience){
+            return res.json({message:"Couldn't find any about info"})
+        }else{
+            res.send(experience);
+        }
+    }catch(error){
+        res.send(error)
+    }
+}
 exports.update = async (req,res) =>{
     try{
         const experience = await Experience.findByIdAndUpdate(req.params._id,{

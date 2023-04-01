@@ -8,6 +8,18 @@ exports.create = async(req,res)=>{
         res.status(500).send(error);
     }
 }
+exports.read = async(req,res)=>{
+    try{
+        const project = await Project.findById(req.params._id);
+        if(!project){
+            return res.json({message:"Couldn't find any about info"})
+        }else{
+            res.send(project);
+        }
+    }catch(error){
+        res.send(error)
+    }
+}
 exports.update = async (req,res) =>{
     try{
         const project = await Project.findByIdAndUpdate(req.params._id,{

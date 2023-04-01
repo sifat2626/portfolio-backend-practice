@@ -30,6 +30,7 @@ const contactSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "user",
         required: true,
+        unique:true
     },
 },{timestamps:true,versionKey:false});
 const Contact = mongoose.model("Contact",contactSchema );
